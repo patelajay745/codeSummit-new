@@ -14,6 +14,8 @@ import {
   Terminal,
   Zap,
 } from "lucide-react";
+import { useClickOutside } from "../_utils/useClickOutside";
+import useMounted from "@/hooks/useMounted";
 
 const THEME_ICONS: Record<string, React.ReactNode> = {
   "vs-dark": <Moon className="size-4" />,
@@ -29,28 +31,13 @@ const THEME_ICONS: Record<string, React.ReactNode> = {
 const ThemeSelector = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useCodeEditorStore();
-  const [mounted, setMounted] = useState(false);
+
   const dropdownRef = useRef<HTMLDivElement>(null);
   const currentTheme = THEME.find((t) => t.id === theme);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
+  useClickOutside(dropdownRef, () => setIsOpen(false));
 
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   if (!mounted) return null;
 
