@@ -9,6 +9,7 @@ import { Editor } from "@monaco-editor/react";
 import { useClerk } from "@clerk/nextjs";
 import { EditorPanelSkeleton } from "./EditorPanelSkeleton";
 import useMounted from "@/hooks/useMounted";
+import ShareSnippetDialog from "./ShareSnippetDialog";
 
 const EditorPanel = () => {
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
@@ -149,9 +150,9 @@ const EditorPanel = () => {
           {!clerk.loaded && <EditorPanelSkeleton />}
         </div>
       </div>
-      {/* {isShareDialogOpen && (
+      {isShareDialogOpen && (
         <ShareSnippetDialog onClose={() => setIsShareDialogOpen(false)} />
-      )} */}
+      )}
     </div>
   );
 };

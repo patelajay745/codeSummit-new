@@ -4,6 +4,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import ConverxClientProvider from "@/components/providers/ConverxClientProvider";
 import Footer from "@/components/providers/Footer";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,8 @@ export default function RootLayout({
           <ConverxClientProvider>{children}</ConverxClientProvider>
 
           <Footer />
+
+          <Toaster richColors />
         </body>
       </html>
     </ClerkProvider>

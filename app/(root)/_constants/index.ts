@@ -1,4 +1,4 @@
-import { Theme } from "@/types";
+
 import { Monaco } from "@monaco-editor/react";
 
 type languageConfig = Record<string, {
@@ -333,7 +333,7 @@ export const LANGUAGE_CONFIG: languageConfig = {
     },
 };
 
-export const THEME: Theme[] = [
+export const THEME = [
     { id: "vs-dark", label: "VS Dark", color: "#1e1e1e" },
     { id: "vs-light", label: "VS Light", color: "#ffffff" },
     { id: "dracula", label: "Dracula", color: "#282a36" },
@@ -506,3 +506,5 @@ export const defineManacoThemes = (monaco: Monaco) => {
         })
     })
 }
+
+export const FREE_PLAN_LANGUAGES = ["javascript", "typescript"];

@@ -2,7 +2,7 @@
 import { useCodeEditorStore } from "@/store/useCodeEditorStore";
 import React, { useEffect, useRef, useState } from "react";
 import { useClickOutside } from "../_utils/useClickOutside";
-import { LANGUAGE_CONFIG } from "../_constants";
+import { FREE_PLAN_LANGUAGES, LANGUAGE_CONFIG } from "../_constants";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDownIcon, LockIcon, Palette, Sparkle } from "lucide-react";
 import Image from "next/image";
@@ -12,7 +12,7 @@ interface Props {
   hasAccess: boolean;
 }
 
-const FREE_PLAN_LANGUAGES = ["javascript", "typescript"];
+
 
 const LanguageSelector: React.FC<Props> = ({ hasAccess }) => {
   const [isOpen, setIsOpen] = useState(false);
