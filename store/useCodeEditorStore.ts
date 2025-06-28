@@ -1,4 +1,3 @@
-
 import { LANGUAGE_CONFIG } from '@/app/(root)/_constants';
 import { CodeEditorState } from './../types/index';
 import { create } from "zustand"
@@ -139,6 +138,47 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => {
                 set({ isRunning: false })
             }
 
+        },
+        submitToJudge0: async (source_code, bearerToken) => {
+            try {
+                const response = await fetch("https://judge0-ce.p.sulu.sh/submissions", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${bearerToken}`
+                    },
+                    body: JSON.stringify({ source_code })
+                });
+                const data = await response.json();
+                return data.token || null;
+            } catch (error) {
+                set({ error: "Failed to submit code to Judge0" });
+                return null;
+            }
+        },
+        pollJudge0Result: async (token, bearerToken) => {
+            try {
+                let result = null;
+                let attempts = 0;
+                while (attempts < 20) { // up to 20 attempts
+                    const response = await fetch(`https://judge0-ce.p.sulu.sh/submissions/${token}`, {
+                        method: "GET",
+                        headers: {
+                            "Authorization": `Bearer ${bearerToken}`
+                        }
+                    });
+                    result = await response.json();
+                    if (result.status && result.status.id === 3) { // Accepted
+                        break;
+                    }
+                    await new Promise(res => setTimeout(res, 1000)); // wait 1s
+                    attempts++;
+                }
+                return result;
+            } catch (error) {
+                set({ error: "Failed to poll Judge0 for result" });
+                return null;
+            }
         },
     }
 })

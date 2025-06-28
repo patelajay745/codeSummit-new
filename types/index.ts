@@ -53,6 +53,8 @@ export interface CodeEditorState {
     setTheme: (theme: string) => void;
     setFontSize: (fontSize: number) => void;
     runCode: () => Promise<void>;
+    submitToJudge0: (source_code: string, token: string) => Promise<string | null>;
+    pollJudge0Result: (token: string, bearerToken: string) => Promise<any>;
 }
 
 export interface Snippet {
